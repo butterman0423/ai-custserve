@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "npm-run-all -p front_dev back_dev",
+    "build": "next build && tsc --project src/tsconfig.json",
+    "start": "npm-run-all -p front_start back_start",
+    "lint": "next lint",
+
+    "front_dev": "next dev",
+    "front_start": "next start",
+    "back_dev": "tsc --project src/tsconfig.json --watch",
+    "back_start": "node src/build/app.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.16.0",

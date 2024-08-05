@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "lib": ["esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "module": "NodeNext",
+        "esModuleInterop": true,
+        "incremental": true,
+
+        "outDir": "./build",
+
+        "paths": {
+            "@/*": ["../*"]
+        }
+    },
+    "files": ["app.ts"]
+}
