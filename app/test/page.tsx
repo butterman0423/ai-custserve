@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function Test() {
     useEffect(() => {
         (async () => {
-            const res = await fetch(`/api/ai/read?prompt=Hello`)
+            const res = await fetch('/api/read?prompt=hello');
             console.log(await res.text())
         })()
     })
