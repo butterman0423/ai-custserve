@@ -1,20 +1,23 @@
 type Options = {
     name: string,
     time: number,
-    text: string
+    text: string,
+    className?: string
 }
 
 export default function TextCard({
-    name, time, text
+    name, time, text, className
 }: Options) {
     const date = new Date(time);
     const ftime = date.toLocaleString();
 
     return (
-        <div>
-            <div>
+        <div className={`${className}`}>
+            <div className="">
                 <span>{ name }</span>
-                <span>{ ftime }</span>
+                <span className="float-right">
+                    <i>{ ftime }</i>
+                </span>
             </div>
             <p>{ text }</p>
         </div>
