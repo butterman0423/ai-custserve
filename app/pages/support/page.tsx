@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Record from "@/components/Record";
 import TextCard from "@/components/TextCard";
@@ -7,15 +7,25 @@ import InputField from "@/components/InputField";
 
 export default function Support() {
     const [messages, setMessages] = useState<string[]>([]);
+    const lastCard = useRef<HTMLDivElement | null>(null);
 
-    const cards = messages.map((txt, idx) => {
+    const cards = messages.map((txt, idx, arr) => {
         return (
             <TextCard 
                 className='bg-primary'
                 key={idx} name='Sample' 
-                time={0} text={txt} />
+                time={0} text={txt}
+                ref={idx === arr.length - 1 ? lastCard : null} />
         );
     });
+
+    useEffect(() => {
+        if(lastCard.current == null) {
+            console.warn("Missing ref");
+            return;
+        }
+        lastCard.current.scrollIntoView();
+    }, [cards, lastCard]);
 
     async function sendPrompt(txt: string) {
         const searchParams = new URLSearchParams({
