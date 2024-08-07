@@ -1,4 +1,4 @@
-import { MutableRefObject, ReactElement } from "react";
+import type { ReactElement } from "react";
 
 type Options = {
     children?: ReactElement | ReactElement[]
