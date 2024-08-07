@@ -37,9 +37,12 @@ export default function Support() {
 
     return (
         <div className="container mx-auto h-screen bg-secondary">
-            <Record className="w-100 h-4/6 mb-4">
-                { cards }
-            </Record>
+            <div className="w-full h-4/6 mb-4">
+                <Record className="w-full h-full">
+                    { cards }
+                </Record>
+            </div>
+            
             <InputField className="w-100 h-1/6 p-6" onClick={sendPrompt}/>
         </div>
     );

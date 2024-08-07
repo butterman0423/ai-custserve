@@ -10,7 +10,7 @@ export default function Record({
 }: Options) {
     return (
         <div className={`overflow-auto ${className}`}>
-            <div className={`w-full flex flex-col justify-end divide-y`}>
+            <div className={`w-full min-h-full flex flex-col justify-end divide-y`}>
                 { children }
             </div>
         </div>
