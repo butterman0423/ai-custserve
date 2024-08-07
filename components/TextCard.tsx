@@ -12,7 +12,7 @@ export default function TextCard({
     const ftime = date.toLocaleString();
 
     return (
-        <div className={`${className}`}>
+        <div className={`p-4 ${className}`}>
             <div className="">
                 <span>{ name }</span>
                 <span className="float-right">

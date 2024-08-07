@@ -1,16 +1,19 @@
-import { ReactElement, ReactNode } from "react";
+import { MutableRefObject, ReactElement } from "react";
 
 type Options = {
     children?: ReactElement | ReactElement[]
-    className?: string
+    className?: string,
 }
 
 export default function Record({
     children, className
 }: Options) {
     return (
-        <div className={`flex flex-col gap-4 justify-end ${className}`}>
-            { children }
+        <div className={`overflow-auto ${className}`}>
+            <div className={`w-full flex flex-col justify-end divide-y`}>
+                { children }
+            </div>
         </div>
+        
     );
 }
