@@ -13,6 +13,22 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+
+      colors: {
+        "primary":    '#022c22',  // emerald-950
+        "secondary":  '#134e4a',  // teal-900
+        "accent":     '#22d3ee',  // cyan-400
+        //"accent":   '#06b6d4',  // cyan-500
+        "text":       '#ffffff',  // white
+      },
+
+      backgroundColor: {
+        "primary":    '#022c22',  // emerald-950
+        "secondary":  '#134e4a',  // teal-900
+        "accent":     '#22d3ee',  // cyan-400
+        //"accent":   '#06b6d4',  // cyan-500
+        "text":       '#ffffff',  // white
+      }
     },
   },
   plugins: [],
