@@ -1,3 +1,5 @@
+import { ForwardedRef, forwardRef } from "react";
+
 type Options = {
     name: string,
     time: number,
@@ -5,14 +7,14 @@ type Options = {
     className?: string
 }
 
-export default function TextCard({
+export default forwardRef(function TextCard({
     name, time, text, className
-}: Options) {
+}: Options, ref: ForwardedRef<HTMLDivElement>) {
     const date = new Date(time);
     const ftime = date.toLocaleString();
 
     return (
-        <div className={`p-4 ${className}`}>
+        <div className={`p-4 ${className}`} ref={ref}>
             <div className="">
                 <span>{ name }</span>
                 <span className="float-right">
@@ -22,4 +24,4 @@ export default function TextCard({
             <p>{ text }</p>
         </div>
     );
-}
+});
