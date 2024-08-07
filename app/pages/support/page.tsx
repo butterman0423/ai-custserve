@@ -8,12 +8,12 @@ import InputField from "@/components/InputField";
 export default function Support() {
     const [messages, setMessages] = useState<string[]>([]);
     return (
-        <div className="container mx-auto h-screen">
-            <Record className="w-100 h-4/6 my-4">
+        <div className="container mx-auto h-screen bg-secondary">
+            <Record className="w-100 h-4/6 mb-4">
                 { messages.map((txt, idx) => {
                     return (
                         <TextCard 
-                            className='bg-slate-700 min-h-32'
+                            className='bg-primary min-h-32'
                             key={idx} name='Sample' 
                             time={0} text={txt} />
                     );
