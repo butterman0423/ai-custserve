@@ -1,4 +1,5 @@
 import { ForwardedRef, forwardRef } from "react";
+import Markdown from "react-markdown";
 
 type Options = {
     name: string,
@@ -21,7 +22,7 @@ export default forwardRef(function TextCard({
                     <i>{ ftime }</i>
                 </span>
             </div>
-            <p>{ text }</p>
+            <Markdown>{ text }</Markdown>
         </div>
     );
 });
