@@ -16,7 +16,7 @@ export default function Support() {
                     );
                 })}
             </Record>
-            <InputField onClick={async (txt) => {
+            <InputField className="w-100 h-1/6" onClick={async (txt) => {
                 const searchParams = new URLSearchParams({
                     prompt: txt
                 })
