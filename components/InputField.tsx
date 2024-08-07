@@ -33,7 +33,8 @@ export default function InputField({
                     placeholder='Enter your text here'
                     ref={textRef} />
                 <div className="absolute w-full h-1/4 bottom-0 px-5 text-accent">
-                    <button className='float-end h-full' onClick={handleClick} disabled={disabled}>
+                    <button className={`float-end h-full ${disabled ? 'text-slate-700' : ''}`} 
+                        onClick={handleClick} disabled={disabled}>
                         Send
                     </button>
                 </div>
