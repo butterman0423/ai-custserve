@@ -5,16 +5,22 @@ import Record from "@/components/Record";
 import TextCard from "@/components/TextCard";
 import InputField from "@/components/InputField";
 
+type Message = {
+    text: string,
+    sender: string,
+    timestamp: number
+}
+
 export default function Support() {
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const lastCard = useRef<HTMLDivElement | null>(null);
 
-    const cards = messages.map((txt, idx, arr) => {
+    const cards = messages.map(({text, sender, timestamp}, idx, arr) => {
         return (
             <TextCard 
                 className='bg-primary'
-                key={idx} name='Sample' 
-                time={0} text={txt}
+                key={idx} name={sender} 
+                time={timestamp} text={text}
                 ref={idx === arr.length - 1 ? lastCard : null} />
         );
     });
@@ -28,11 +34,29 @@ export default function Support() {
     }, [cards, lastCard]);
 
     async function sendPrompt(txt: string) {
+        if(txt === '') {
+            console.error("No message was provided");
+            return;
+        }
+
         const searchParams = new URLSearchParams({
             prompt: txt
         })
+        
+        // Initial user message
+        const userMsg = {
+            text: txt, sender: 'User', timestamp: Date.now()
+        }
+        setMessages([...messages, userMsg]);
+
+        // Server message
         const res = await fetch(`/api/talk?${searchParams.toString()}`);
-        setMessages([...messages, txt, await res.text()]);
+        const aiMsg = {
+            text: await res.text(),
+            sender: 'Chatbot',
+            timestamp: Date.now()
+        }
+        setMessages([...messages, userMsg, aiMsg]);
     }
 
     return (
