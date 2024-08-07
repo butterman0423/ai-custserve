@@ -22,14 +22,14 @@ export default function InputField({
 
     return (
         <div className={`${className}`}>
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full bg-primary rounded-md">
                 <textarea 
-                    className='block text-black w-full h-full' 
+                    className='block w-full h-full bg-transparent p-4' 
                     style={{ resize: 'none' }}
                     placeholder='Enter your text here'
                     ref={textRef} />
-                <div className="absolute w-full h-1/4 bottom-0 px-5">
-                    <button className='float-end h-full text-black' onClick={handleClick}>
+                <div className="absolute w-full h-1/4 bottom-0 px-5 text-accent">
+                    <button className='float-end h-full' onClick={handleClick}>
                         Send
                     </button>
                 </div>
