@@ -9,7 +9,7 @@ export default function Record({
     children, className
 }: Options) {
     return (
-        <div className={`flex flex-col gap-4 justify-end ${className}`}>
+        <div className={`flex flex-col justify-end divide-y ${className}`}>
             { children }
         </div>
     );
