@@ -17,6 +17,9 @@ export default async function RootLayout({
         <>
             <nav>
                 <SignOutButton/>
+                <div className="float-end">
+                    { session?.user?.name }
+                </div>
             </nav>
             <main>{ children }</main>
         </>
