@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Record from "@/components/Record";
 import TextCard from "@/components/TextCard";
 import InputField from "@/components/InputField";
+import { sendStatusCode } from "next/dist/server/api-utils";
 
 type Message = {
     text: string,
@@ -67,7 +68,7 @@ export default function Support() {
                 </Record>
             </div>
             
-            <InputField className="w-100 h-1/6 p-6" onClick={sendPrompt}/>
+            <InputField className="w-100 h-1/6 p-6" onClick={sendPrompt} onKeyDown={sendPrompt}/>
         </div>
     );
 }
