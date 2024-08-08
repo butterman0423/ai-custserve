@@ -34,6 +34,10 @@ export async function GET(req: NextApiRequest) {
         );
     }
 
+    const cookies = req.cookies['_parsed'] as unknown;
+
+    console.log((cookies as Map<string, { name: string, value: string }>).get('authjs.session-token')?.value);
+
     const url = new URL(req.url as string);
     const prompt = url.searchParams.get('prompt');
 
