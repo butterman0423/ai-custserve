@@ -1,8 +1,16 @@
 'use client'
-import 'dotenv/config';
 
 export default function Test() {
+    const handleKeyDown = (e:any) => {
+        console.log(e)
+        if(e.key == "Enter"){
+            console.log("huzzah")
+        }
+    }
     return (
-        <h1>Hello World</h1>
+        <div>
+            <h1>Hello World</h1>
+            <input onKeyDown={(e) => handleKeyDown(e)}/>
+        </div>
     );
 }
