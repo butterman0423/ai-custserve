@@ -17,6 +17,7 @@ export default function Support() {
     const lastCard = useRef<HTMLDivElement | null>(null);
 
     const cards = messages.map(({text, sender, timestamp}, idx, arr) => {
+        console.log(sender)
         return (
             <TextCard 
                 className='bg-primary'
