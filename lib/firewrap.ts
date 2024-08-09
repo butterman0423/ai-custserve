@@ -18,11 +18,9 @@ function getUserHist(id: string) {
 }
 
 export async function createHistory(id: string) {
-    return getUserHist(id)
+    await getUserHist(id)
         .doc('_default')
-        .set({
-            history: NEW_HIST
-        });
+        .set(NEW_HIST);
 }
 
 export async function getHistory(id: string) {
@@ -34,7 +32,5 @@ export async function getHistory(id: string) {
 export async function updateHistory(id: string, hist: StartChatParams) {
     return getUserHist(id)
         .doc('_default')
-        .set({
-            history: hist
-        });
+        .set(hist);
 }
