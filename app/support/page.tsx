@@ -5,6 +5,7 @@ import Record from "@/components/Record";
 import TextCard from "@/components/TextCard";
 import InputField from "@/components/InputField";
 import { sendStatusCode } from "next/dist/server/api-utils";
+import { useSession } from "next-auth/react";
 
 type Message = {
     text: string,
@@ -13,11 +14,12 @@ type Message = {
 }
 
 export default function Support() {
+    const session = useSession();
+
     const [messages, setMessages] = useState<Message[]>([]);
     const lastCard = useRef<HTMLDivElement | null>(null);
 
     const cards = messages.map(({text, sender, timestamp}, idx, arr) => {
-        console.log(sender)
         return (
             <TextCard 
                 className='bg-primary'
@@ -47,7 +49,7 @@ export default function Support() {
         
         // Initial user message
         const userMsg = {
-            text: txt, sender: 'User', timestamp: Date.now()
+            text: txt, sender: session.data?.user?.name || 'User', timestamp: Date.now()
         }
         setMessages([...messages, userMsg]);
 

@@ -2,6 +2,7 @@ import SignOutButton from "@/components/SignOutButton";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 export default async function RootLayout({
     children,
@@ -21,7 +22,9 @@ export default async function RootLayout({
                     { session?.user?.name }
                 </div>
             </nav>
-            <main>{ children }</main>
+            <SessionProvider session={session}>
+                <main>{ children }</main>
+            </SessionProvider>
         </>
     );
   }
