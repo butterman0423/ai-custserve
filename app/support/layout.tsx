@@ -16,11 +16,10 @@ export default async function RootLayout({
         
     return (
         <>
-            <nav className="fixed bg-textfield w-screen h-12 px-10 z-10 shadow-lg shadow-black">
+            <nav className="fixed bg-textfield w-screen h-12 px-10 z-10 shadow-lg shadow-black text-text">
                 <SignOutButton className="h-full w-auto p-2 hover:bg-primary"/>
                 <div className="float-end h-full flex flex-col justify-center">
-                    <span className="text-center"
-                    style={{color:"white"}}>
+                    <span className="text-center">
                         { session?.user?.name }
                     </span>
                 </div>
