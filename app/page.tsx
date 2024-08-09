@@ -10,8 +10,8 @@ export default async function Home() {
   }
   
   return (
-    <main className="">
-      <h1>AI Customer Support</h1>
+    <main className="w-screen h-screen">
+      <h1 className="text-7xl">AI Customer Support</h1>
       <SignInButton/>
     </main>
   );

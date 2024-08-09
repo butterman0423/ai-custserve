@@ -2,14 +2,15 @@
 import { signIn } from "next-auth/react"
 
 type Options = {
-    afterSignIn?: () => void
+    afterSignIn?: () => void,
+    className?: string,
 }
 
 
 export default function SignInButton({
-    afterSignIn
+    afterSignIn, className
 }: Options) {
-    return <button onClick={async () => {
+    return <button className={className} onClick={async () => {
         try {
             await signIn();
         } catch(e) {
