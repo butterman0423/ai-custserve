@@ -56,7 +56,7 @@ export default function InputField({
                     </button>
                 </div>
             </div> */}
-            <div className="relative w-full h-full bg-textfield rounded-lg flex">
+            <div className="relative w-full h-full bg-textfield rounded-xl flex">
             <textarea 
                 className='block w-full bg-transparent p-4 text-white placeholder-white focus:outline-none focus:ring-0' 
                 style={{ resize: 'none' }}
@@ -66,10 +66,11 @@ export default function InputField({
             />
 
                 <button 
-                    className={`ml-4 border-2 border-white p-4 rounded-lg text-white hover:bg-primary`} 
+                    className={`my-auto mx-5 border-2 border-white px-6 h-10 text-white rounded-xl hover:bg-primary`} 
                     onClick={handleClick} 
-                    disabled={disabled}>
-                    Send
+                    disabled={disabled}
+                    >
+                    ↑
                 </button>
             </div>
 
