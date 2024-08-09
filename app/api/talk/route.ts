@@ -1,5 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { GoogleGenerativeAI, StartChatParams } from '@google/generative-ai';
+import type { NextApiRequest } from 'next'
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { createHistory, getHistory, updateHistory } from '@/lib/firewrap';
+import { getAccountTokens, getUserSessionId } from '@/lib/firevalid';
+import { auth } from '@/auth';
 
 const API_KEY = process.env.GEMINI_KEY;
 if(API_KEY == undefined) {
@@ -9,34 +12,12 @@ if(API_KEY == undefined) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const gemini = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-// TODO: This should be stored and managed somewhere else
-// In-place memory (that we free after a certain interval) could work
-// as there's no need to persist data for a long period of time
-// If there's a memory constraint, storing and fetching from a 
-// noSQL database could work nicely 
-const hist: StartChatParams = {
-    history: [
-        {
-            role: 'user',
-            parts: [{ text: '' }]
-        },
-        {
-            role: 'model',
-            parts: [{ text: 'Hi there how can I help you' }]
-        }
-    ]
-}
-
 export async function GET(req: NextApiRequest) {
     if(!req.url) {
         return new Response('Missing URL.', 
             { status: 400 }
         );
     }
-
-    const cookies = req.cookies['_parsed'] as unknown;
-
-    console.log((cookies as Map<string, { name: string, value: string }>).get('authjs.session-token')?.value);
 
     const url = new URL(req.url as string);
     const prompt = url.searchParams.get('prompt');
@@ -46,10 +27,62 @@ export async function GET(req: NextApiRequest) {
             { status: 400 }
         );
     }
+
+    let uid: string
+    try {
+        const session = await auth();
+        if(!session) {
+            throw Error("Failed to get session");
+        }
+
+        const tokens = getAccountTokens(session);
+        if(!tokens) {
+            throw Error("Token not found");
+        }
+
+        const _uid = await getUserSessionId(tokens);
+        if(!_uid) {
+            throw Error("Failed to retrieve user id.")
+        }
+        uid = _uid;
+
+    } catch (e) {
+        return new Response((e as Error).message, { status: 401 });
+    }
+
+    const doc = await getHistory(uid);
+    if(!doc.exists) {
+        await createHistory(uid);
+    }
     
+    const docData = doc.data();
+    if(!docData) {
+        return new Response(`Failed to create history for ${uid}`, { status: 500 });
+    }
+
+    const hist = docData['history'];
+    if(hist == undefined) {
+        return new Response(`Failed to find history for ${uid}`, { status: 500 });
+    }
+
     const chat = gemini.startChat(hist);
     const aiReq = await chat.sendMessage(prompt);
     const aiRes = aiReq.response;
+    const response = aiRes.text()
 
-    return new Response(aiRes.text(), { status: 200 });
+    await updateHistory(uid, {
+        history: [
+            ...hist,
+            {
+                role: 'user',
+                parts: [{ text: prompt }]
+            },
+            {
+                role: 'model',
+                parts: [{ text: response }]
+            }
+        ]
+    })
+
+    return new Response(response, { status: 200 });
 }
