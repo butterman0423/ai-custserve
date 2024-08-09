@@ -12,10 +12,9 @@ export default async function RootLayout({
     if(!session) {
         redirect('/');
     }
-        
     return (
         <>
-            <nav>
+            <nav className="w-screen h-10">
                 <SignOutButton/>
                 <div className="float-end">
                     { session?.user?.name }

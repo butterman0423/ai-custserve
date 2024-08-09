@@ -15,9 +15,7 @@ type Message = {
 export default function Support() {
     const [messages, setMessages] = useState<Message[]>([]);
     const lastCard = useRef<HTMLDivElement | null>(null);
-
     const cards = messages.map(({text, sender, timestamp}, idx, arr) => {
-        console.log(sender)
         return (
             <TextCard 
                 className='bg-primary'
@@ -62,7 +60,7 @@ export default function Support() {
     }
 
     return (
-        <div className="container mx-auto h-screen bg-secondary">
+        <div className="container mx-auto h-screen w-screen bg-secondary">
             <div className="w-full h-4/6 mb-4">
                 <Record className="w-full h-full">
                     { cards }

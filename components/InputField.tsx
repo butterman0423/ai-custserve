@@ -34,6 +34,7 @@ export default function InputField({
             e.preventDefault();
             const txt = textRef.current.value;
             textRef.current.value = '';
+            textRef.current.blur()
             await onKeyDown(txt);
             setDisabled(false);
         }
