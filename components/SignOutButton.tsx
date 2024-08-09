@@ -2,13 +2,14 @@
 import { signOut } from "next-auth/react"
 
 type Options = {
-    afterSignOut?: () => void
+    afterSignOut?: () => void,
+    className? : string,
 }
 
 export default function SignOutButton({
-    afterSignOut
+    afterSignOut, className
 }: Options) {
-    return <button onClick={async () => {
+    return <button className={className} onClick={async () => {
         try {
             await signOut();
         } catch(e) {
