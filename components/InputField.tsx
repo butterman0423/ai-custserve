@@ -43,7 +43,7 @@ export default function InputField({
 
     return (
         <div className={`${className}`}>
-            <div className="relative w-full h-full bg-primary rounded-md">
+            {/* <div className="relative w-full h-full bg-primary rounded-md">
                 <textarea 
                     className='block w-full h-full bg-transparent p-4' 
                     style={{ resize: 'none' }}
@@ -56,7 +56,23 @@ export default function InputField({
                         Send
                     </button>
                 </div>
+            </div> */}
+            <div className="relative w-full h-full bg-primary rounded-md flex">
+                <textarea 
+                    className='block w-full bg-transparent p-4 focus:outline-none focus:ring-0' 
+                    style={{ resize: 'none', color:"white" }}
+                    placeholder='Enter your text here'
+                    onKeyDown={handleKeyDown} 
+                    ref={textRef} 
+                />
+                <button 
+                    className={`ml-4 border-2 border-gray-500 p-4 rounded-lg text-white`} 
+                    onClick={handleClick} 
+                    disabled={disabled}>
+                    Send
+                </button>
             </div>
+
         </div>
     );
 }

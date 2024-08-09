@@ -15,7 +15,7 @@ export default forwardRef(function TextCard({
     const ftime = date.toLocaleString();
 
     return (
-        <div className={`p-4 rounded-2xl border-0 border-primary mx-4 my-2 text-wrap relative ${className}`} ref={ref}>
+        <div className={`p-4 rounded-2xl border-0 border-primary mx-4 my-2 text-wrap relative text-white ${className}`} ref={ref}>
             <div className="">
                 <span>{ name }</span>
                 <span className="float-right">
