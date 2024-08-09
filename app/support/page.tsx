@@ -18,6 +18,7 @@ export default function Support() {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const lastCard = useRef<HTMLDivElement | null>(null);
+    
     const cards = messages.map(({text, sender, timestamp}, idx, arr) => {
         return (
             <TextCard 
