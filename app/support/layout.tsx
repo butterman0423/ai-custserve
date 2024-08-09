@@ -16,10 +16,12 @@ export default async function RootLayout({
         
     return (
         <>
-            <nav>
-                <SignOutButton/>
-                <div className="float-end">
-                    { session?.user?.name }
+            <nav className="fixed bg-primary w-screen h-12 px-10 z-10 shadow-lg shadow-black">
+                <SignOutButton className="h-full w-auto p-2 hover:bg-secondary"/>
+                <div className="float-end h-full flex flex-col justify-center">
+                    <span className="text-center">
+                        { session?.user?.name }
+                    </span>
                 </div>
             </nav>
             <SessionProvider session={session}>

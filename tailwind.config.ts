@@ -15,20 +15,11 @@ const config: Config = {
       },
 
       colors: {
-        "primary":    '#022c22',  // emerald-950
-        "secondary":  '#134e4a',  // teal-900
-        "accent":     '#22d3ee',  // cyan-400
-        //"accent":   '#06b6d4',  // cyan-500
-        "text":       '#ffffff',  // white
+        "primary":    '#292929',
+        "secondary":  '#454444',
+        "accent":     '#54bceb',
+        "text":       '#ffffff',
       },
-
-      backgroundColor: {
-        "primary":    '#022c22',  // emerald-950
-        "secondary":  '#134e4a',  // teal-900
-        "accent":     '#22d3ee',  // cyan-400
-        //"accent":   '#06b6d4',  // cyan-500
-        "text":       '#ffffff',  // white
-      }
     },
   },
   plugins: [],
