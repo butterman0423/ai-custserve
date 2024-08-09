@@ -25,7 +25,7 @@ export default async function Home() {
       <footer className="absolute w-screen h-16 bottom-0 bg-secondary text-gray-800 shadow-2xl shadow-black px-8">
         <div className="inline-block h-full">
           <span className="h-full flex flex-col justify-center">
-            Developed by: Esat Adiloglu, Nathaniel Escaro, Saikarthik Mummadisingu, Ryan Eshan
+            Developed by: Esat Adiloglu, Nathaniel Escaro, Ryan Eshan, Saikarthik Mummadisingu
           </span>
         </div>
         <div className="inline-block h-full float-end">
