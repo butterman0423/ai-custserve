@@ -11,7 +11,7 @@ export default async function Home() {
   
   return (
     <main className="w-screen h-screen">
-      <h1 className="text-7xl">AI Customer Support</h1>
+      <h1 className="xl:text-7xl md:text-5xl sm:text-3xl">AI Customer Support</h1>
       <SignInButton/>
     </main>
   );
