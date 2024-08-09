@@ -1,0 +1,280 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int id;
+    int cputime;
+    int period;
+    int deadline;
+    int timeremaining;
+    int waitingtime;
+    int timecreated;
+    int finished;
+} Process;
+
+int gcd(int firstnumber, int secondnumber) {
+    if (secondnumber == 0) { return firstnumber; } 
+    else { return gcd(secondnumber, firstnumber % secondnumber); }
+}
+
+int lcm(int firstnumber, int secondnumber) {
+    return (firstnumber * secondnumber) / gcd(firstnumber, secondnumber);
+}
+
+int findmaxtime(Process processeslist[], int numberofprocesses) {
+    int maxtime = 1;
+    for (int i = 0; i < numberofprocesses; i++) {
+        maxtime = lcm(maxtime, processeslist[i].period);
+    }
+    return maxtime;
+}
+
+Process* bubbleSort(Process processeslist[], int length) {
+    Process* temp_processes[length];
+
+    for(int i = 0; i < length; i++) temp_processes[i] = &processeslist[i];
+
+    // Perform bubble sort on temp_processes
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            if(j != i && temp_processes[j]->finished == 0 && temp_processes[i]->finished == 0) {
+                if(temp_processes[j]->deadline > temp_processes[i]->deadline) {
+                    Process* temporary = temp_processes[j];
+                    temp_processes[j] = temp_processes[i];
+                    temp_processes[i] = temporary;
+                } else if(temp_processes[j]->deadline == temp_processes[i]->deadline) {
+                    if(temp_processes[j]->timecreated > temp_processes[i]->timecreated) {
+                        //swap
+                        Process* temporary = temp_processes[j];
+                        temp_processes[j] = temp_processes[i];
+                        temp_processes[i] = temporary;
+                    } else if(temp_processes[j]->timecreated == temp_processes[i]->timecreated) {
+                        if(temp_processes[j]->id > temp_processes[i]->id) {
+                            //swap
+                            Process* temporary = temp_processes[j];
+                            temp_processes[j] = temp_processes[i];
+                            temp_processes[i] = temporary;
+                        }
+                    }
+                }
+            }
+        
+        }
+    }
+
+    // Return the process with the minimum deadline (which is the first process after sorting)
+    for(int i = 0; i < length; i++) if(temp_processes[i]->finished == 0) {
+        return temp_processes[i];
+    }
+    return NULL;
+}
+
+
+
+int main() {
+
+    
+    int numberofprocesses = 0;
+    int currenttime = 0;
+
+    printf("Enter the number of processes to schedule: ");
+    scanf("%d", &numberofprocesses);
+
+    
+    Process processeslist[numberofprocesses];
+
+    for (int i = 0; i < numberofprocesses; i++) {
+        int id = i + 1;
+        int cputime;
+        int period;
+        printf("Enter the CPU time of process %d: ", id);
+        scanf("%d", &cputime);
+        printf("Enter the period of process %d: ", id);
+        scanf("%d", &period);
+
+
+        //git process make something idk
+        Process initProcess;
+        initProcess.id = id;
+        initProcess.cputime = cputime;
+        initProcess.period = period;  
+        initProcess.finished = 0;  
+        initProcess.timecreated = 0;
+        initProcess.timeremaining = cputime;
+        initProcess.waitingtime = 0;
+        initProcess.deadline = period;
+
+        processeslist[i] = initProcess;
+    }
+
+    int maxtime = findmaxtime(processeslist, numberofprocesses);
+
+    Process allprocesses[numberofprocesses * maxtime]; 
+
+    int numberofprocessescreated = 0;
+
+    for (int i = 0; i < numberofprocesses; i++) {
+        allprocesses[i] = processeslist[i];
+        numberofprocessescreated++;
+    }
+
+    Process* currentprocess = bubbleSort(allprocesses, numberofprocessescreated); //pointer to the current process that should be run
+
+    //first print
+    printf("%d: processes (oldest first):", currenttime);
+        for (int j = 0; j < numberofprocessescreated; j++) {
+            if (allprocesses[j].timecreated <= currenttime && allprocesses[j].finished == 0) {
+                printf(" %d (%d ms)", allprocesses[j].id, allprocesses[j].timeremaining);
+            }
+        } 
+
+        //here we have to check for preemptions, but we worry about that later
+    printf("\n");
+    printf("%d: process %d starts\n", currenttime, currentprocess->id);
+
+    while (currenttime < maxtime) {
+
+        //check for missed deadlines
+        Process* dynamicLate = (Process*) malloc(sizeof(Process) * numberofprocesses * maxtime);
+        int lateCounter = 0;
+
+        for(int i = 0; i < numberofprocessescreated; i++){
+            if(currenttime == allprocesses[i].deadline && allprocesses[i].finished == 0 && allprocesses[i].cputime > 0) {
+                
+
+                //printf("%d + %d\n", allprocesses[i].deadline, allprocesses[i].period);
+                allprocesses[i].deadline += allprocesses[i].period;
+                *(dynamicLate + lateCounter) = allprocesses[i];
+                lateCounter++;
+                
+            }
+        }   
+
+        
+        for(int j = 0; j < lateCounter; j++) {
+            for(int k = j + 1; k < lateCounter; k++) {
+                if((dynamicLate + j)->id > (dynamicLate + k)->id) {
+                    Process temp = *(dynamicLate + j);
+                    *(dynamicLate + j) = *(dynamicLate + k);
+                    *(dynamicLate + k) = temp;
+                } else if((dynamicLate + j)->id == (dynamicLate + k)->id) {
+                    if((dynamicLate + j)->timecreated > (dynamicLate + k)->timecreated) {
+                        Process temp = *(dynamicLate + j);
+                        *(dynamicLate + j) = *(dynamicLate + k);
+                        *(dynamicLate + k) = temp;
+                    } else if((dynamicLate + j)->timecreated == (dynamicLate + k)->timecreated) {
+                        if((dynamicLate + j)->timeremaining < (dynamicLate + k)->timeremaining) {
+                            Process temp = *(dynamicLate + j);
+                            *(dynamicLate + j) = *(dynamicLate + k);
+                            *(dynamicLate + k) = temp;
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+
+        for(int i = 0; i < lateCounter; i++) printf("%d: process %d missed deadline (%d ms left), new deadline is %d\n", currenttime, dynamicLate[i].id, dynamicLate[i].timeremaining, dynamicLate[i].deadline);
+
+        free(dynamicLate);
+        dynamicLate = NULL;
+
+        //check for new processes to be created
+        int count = 0;
+        for (int i = 0; i < numberofprocesses; i++) {
+            if (currenttime % processeslist[i].period == 0 && currenttime != 0) {
+                //create process
+                Process newProcess;
+                newProcess.id = processeslist[i].id;
+                newProcess.period = processeslist[i].period;
+                newProcess.cputime = processeslist[i].cputime;
+                newProcess.timeremaining = newProcess.cputime;
+                newProcess.deadline = currenttime + processeslist[i].period;
+                newProcess.timecreated = currenttime;
+                newProcess.waitingtime = 0;
+                newProcess.finished = 0;
+                allprocesses[numberofprocessescreated] = newProcess;
+                numberofprocessescreated++;
+                count = 1;
+            }
+        }    
+
+        if(count == 1 && currenttime != 0) {
+            printf("%d: processes (oldest first):", currenttime);
+            for (int j = 0; j < numberofprocessescreated; j++) {
+                if (allprocesses[j].timecreated <= currenttime && allprocesses[j].finished == 0) {
+                    printf(" %d (%d ms)", allprocesses[j].id, allprocesses[j].timeremaining);
+                }
+            } 
+            printf("\n");
+
+            //here we have to check for preemptions, but we worry about that later
+            
+            if(currentprocess != NULL) {
+                Process* possibleReplacement = bubbleSort(allprocesses, numberofprocessescreated);
+                if(currentprocess != NULL && possibleReplacement != currentprocess) {
+                    printf("%d: process %d preempted!\n", currenttime, currentprocess->id);
+                    currentprocess = possibleReplacement;
+                    printf("%d: process %d starts\n", currenttime, currentprocess->id);
+                }
+            } else {
+                currentprocess = bubbleSort(allprocesses, numberofprocessescreated);
+                if(currentprocess != NULL) printf("%d: process %d starts\n", currenttime, currentprocess->id);
+            }
+            
+        }   
+
+        if(currentprocess == NULL) {
+            currentprocess = bubbleSort(allprocesses, numberofprocessescreated);
+            if(currentprocess != NULL) printf("%d: process %d starts\n", currenttime, currentprocess->id);
+            
+        }
+
+        
+
+        currenttime++;
+        if(currentprocess != NULL) currentprocess->timeremaining--;    
+        for (int i = 0; i < numberofprocessescreated; i++) {
+            if (allprocesses[i].finished == 0) {
+                if (currentprocess != NULL && currentprocess != &allprocesses[i]) {
+                    allprocesses[i].waitingtime++;
+                }
+            }
+        }
+
+        // process ending
+        if (currentprocess != NULL && currentprocess->timeremaining == 0) {
+            printf("%d: process %d ends\n", currenttime, currentprocess->id);
+            currentprocess->finished = 1;
+            currentprocess = NULL;
+
+            //for(int i = 0; i < numberofprocessescreated; i++) if(allprocesses[i].finished == 0) printf("process %d is unfinished\n", allprocesses[i].id);
+            //currentprocess = bubbleSort(allprocesses, numberofprocessescreated); //find next process
+            //if(currentprocess!= NULL) printf("%d: process %d starts\n", currenttime, currentprocess->id);
+        }
+        
+    }
+
+
+    printf("%d: Max Time reached\n", maxtime);
+
+    
+    int sumofallwaitingtimes = 0;
+    
+    for (int i = 0; i < numberofprocessescreated; i++) {
+        sumofallwaitingtimes += allprocesses[i].waitingtime;
+        
+    }
+
+    double average_waiting_time; 
+    average_waiting_time = (double) sumofallwaitingtimes / numberofprocessescreated;
+
+    printf("Sum of all waiting times: %d\n", sumofallwaitingtimes);
+    printf("Number of processes created: %d\n", numberofprocessescreated);
+    printf("Average Waiting Time: %.2lf\n", average_waiting_time);
+
+    
+    
+    return 0;
