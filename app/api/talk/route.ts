@@ -1,4 +1,4 @@
-import type { NextApiRequest } from 'next'
+import type { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHistory, getHistory, updateHistory } from '@/lib/firewrap';
 import { getAccountTokens, getUserSessionId } from '@/lib/firevalid';
@@ -12,7 +12,7 @@ if(API_KEY == undefined) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const gemini = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: Request | NextRequest) {
     if(!req.url) {
         return new Response('Missing URL.', 
             { status: 400 }
