@@ -25,7 +25,7 @@ export default async function Home() {
       <footer className="absolute w-screen h-20 bottom-0 bg-gray-200 text-gray-800 shadow-inner px-8 flex justify-between items-center">
   <div className="flex items-center">
     <span className="text-sm md:text-base font-semibold">
-      Developed by: Esat Adiloglu, Nathaniel Escaro, Saikarthik Mummadisingu, Ryan Eshan
+      Developed by: Esat Adiloglu, Nathaniel Escaro, Ryan Eshan, Saikarthik Mummadisingu
     </span>
   </div>
   <div className="flex items-center">
