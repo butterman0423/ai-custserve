@@ -38,7 +38,8 @@ export default function Support() {
     }, [cards, lastCard]);
 
     async function sendPrompt(txt: string) {
-        if(txt === '') {
+        if(!txt.replace(/\s/g,"")) {
+            alert("Please put in text.")
             console.error("No message was provided");
             return;
         }
@@ -64,14 +65,14 @@ export default function Support() {
     }
 
     return (
-        <div className="container mx-auto h-screen bg-secondary shadow-2xl shadow-gray-900">
-            <div className="w-full h-4/6 mb-4">
+        <div className="container mx-auto h-screen w-8/12 bg-secondary shadow-2xl shadow-gray-900">
+            <div className="w-full h-5/6 mb-4">
                 <Record className="w-full h-full">
                     { cards }
                 </Record>
             </div>
-            
-            <InputField className="w-100 h-1/6 p-6" onClick={sendPrompt} onKeyDown={sendPrompt}/>
+    
+            <InputField className=" h-1/12 p-6" onClick={sendPrompt} onKeyDown={sendPrompt}/>
         </div>
     );
 }

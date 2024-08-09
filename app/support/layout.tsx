@@ -20,7 +20,7 @@ export default async function RootLayout({
                 <SignOutButton className="h-full w-auto p-2 hover:bg-primary"/>
                 <div className="float-end h-full flex flex-col justify-center">
                     <span className="text-center">
-                        { session?.user?.name }
+                        {session?.user?.name }
                     </span>
                 </div>
             </nav>

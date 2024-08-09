@@ -21,6 +21,10 @@ const config: Config = {
         "text":       '#ffffff',
         "textfield": "#2f5061"
       },
+      borderRadius: {
+        "userText": "0.5rem 0 0 0.5rem",
+        "botText": "0 0.5rem 0.5rem 0"
+      }
     },
   },
   plugins: [],
