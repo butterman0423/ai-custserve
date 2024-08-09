@@ -9,10 +9,14 @@ type Options = {
 export default function SignOutButton({
     afterSignOut, className
 }: Options) {
+<<<<<<< HEAD
     return <button 
     className={className} 
     
     onClick={async () => {
+=======
+    return <button className={className} onClick={async () => {
+>>>>>>> 17b00ef (Basic nav bar styling)
         try {
             await signOut();
         } catch(e) {
