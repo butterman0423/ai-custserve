@@ -9,7 +9,10 @@ type Options = {
 export default function SignOutButton({
     afterSignOut, className
 }: Options) {
-    return <button className={className} onClick={async () => {
+    return <button 
+    className={className} 
+    
+    onClick={async () => {
         try {
             await signOut();
         } catch(e) {

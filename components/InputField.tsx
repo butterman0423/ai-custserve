@@ -57,16 +57,17 @@ export default function InputField({
                     </button>
                 </div>
             </div> */}
-            <div className="relative w-full h-full bg-primary rounded-md flex">
-                <textarea 
-                    className='block w-full bg-transparent p-4 focus:outline-none focus:ring-0' 
-                    style={{ resize: 'none', color:"white" }}
-                    placeholder='Enter your text here'
-                    onKeyDown={handleKeyDown} 
-                    ref={textRef} 
-                />
+            <div className="relative w-full h-full bg-textfield rounded-lg flex">
+            <textarea 
+                className='block w-full bg-transparent p-4 text-white placeholder-white focus:outline-none focus:ring-0' 
+                style={{ resize: 'none' }}
+                placeholder='Enter your text here'
+                onKeyDown={handleKeyDown} 
+                ref={textRef} 
+            />
+
                 <button 
-                    className={`ml-4 border-2 border-gray-500 p-4 rounded-lg text-white`} 
+                    className={`ml-4 border-2 border-white p-4 rounded-lg text-white hover:bg-primary`} 
                     onClick={handleClick} 
                     disabled={disabled}>
                     Send
