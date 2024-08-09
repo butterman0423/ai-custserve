@@ -15,11 +15,10 @@ const config: Config = {
       },
 
       colors: {
-        "primary":    '#4297a0',
-        "secondary":  '#f4eae6',
-        "accent":     '#2f5061',
+        "primary":    '#292929',
+        "secondary":  '#454444',
+        "accent":     '#54bceb',
         "text":       '#ffffff',
-        "textfield": "#2f5061"
       },
     },
   },
