@@ -16,7 +16,7 @@ export default async function RootLayout({
         
     return (
         <>
-            <nav className="bg-primary h-12 px-10 z-10 shadow-lg shadow-black">
+            <nav className="fixed bg-primary w-screen h-12 px-10 z-10 shadow-lg shadow-black">
                 <SignOutButton className="h-full w-auto hover:bg-secondary"/>
                 <div className="float-end h-full flex flex-col justify-center">
                     <span className="text-center">
