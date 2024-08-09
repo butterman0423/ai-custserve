@@ -15,8 +15,8 @@ export default async function RootLayout({
     }
     return (
         <>
-            <nav className="w-screen h-10">
-                <SignOutButton/>
+            <nav className="bg-primary p-4 z-10 shadow-lg shadow-black">
+                <SignOutButton className="h-full w-auto"/>
                 <div className="float-end">
                     { session?.user?.name }
                 </div>
