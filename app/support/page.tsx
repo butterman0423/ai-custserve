@@ -66,13 +66,13 @@ export default function Support() {
 
     return (
         <div className="container mx-auto h-screen w-8/12 bg-secondary shadow-2xl shadow-gray-900">
-            <div className="w-full h-5/6 mb-4">
+            <div className="w-full h-4/5 mb-4">
                 <Record className="w-full h-full">
                     { cards }
                 </Record>
             </div>
     
-            <InputField className=" h-1/12 p-6" onClick={sendPrompt} onKeyDown={sendPrompt}/>
+            <InputField className=" h-1/6 p-6" onClick={sendPrompt} onKeyDown={sendPrompt}/>
         </div>
     );
 }
