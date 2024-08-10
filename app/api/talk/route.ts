@@ -4,6 +4,7 @@ import { createHistory, getHistory, updateHistory } from '@/lib/firewrap';
 import { getAccountTokens, getUserSessionId } from '@/lib/firevalid';
 import { auth } from '@/auth';
 
+
 const API_KEY = process.env.GEMINI_KEY;
 if(API_KEY == undefined) {
     throw Error("Gemini API key not found or unrecognizable.");
